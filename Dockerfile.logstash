@@ -1,0 +1,16 @@
+# Use the official Logstash image as the base image
+FROM docker.elastic.co/logstash/logstash:8.9.0
+
+# Install any additional dependencies or plugins here
+# For example, to install the JDBC output plugin:
+RUN bin/logstash-plugin install logstash-output-jdbc
+
+# Copy your Logstash configuration file into the container
+COPY logstash.conf /usr/share/logstash/config/logstash.conf
+
+# Expose any ports your Logstash instance will listen on
+# For example, if your Logstash configuration listens on port 5044:
+EXPOSE 5044
+
+# Start Logstash when the container starts
+CMD ["logstash", "-f", "/usr/share/logstash/config/logstash.conf"]
